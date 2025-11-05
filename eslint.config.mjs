@@ -1,25 +1,18 @@
 import js from '@eslint/js';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
 import prettierConfig from 'eslint-config-prettier';
 import astroPlugin from 'eslint-plugin-astro';
 
 export default [
   js.configs.recommended,
   {
-    files: ['**/*.{js,mjs,cjs,ts,tsx}'],
+    files: ['**/*.{js,mjs,cjs,jsx,astro}'],
     languageOptions: {
-      parser: tsParser,
       ecmaVersion: 2022,
       sourceType: 'module',
     },
-    plugins: {
-      '@typescript-eslint': tsPlugin,
-    },
     rules: {
       // Custom rules
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-console': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',
@@ -27,7 +20,7 @@ export default [
   },
   ...astroPlugin.configs.recommended,
   {
-    files: ['**/*.{js,mjs,cjs,ts,tsx,astro}'],
+    files: ['**/*.{js,mjs,cjs,jsx,astro}'],
     ...prettierConfig,
   },
   {
