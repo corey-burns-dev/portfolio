@@ -1,100 +1,181 @@
-# Astro Starter Kit: Basics
+# Corey Burns - Portfolio
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+[![Work in Progress](https://img.shields.io/badge/status-work%20in%20progress-orange.svg)](https://github.com/corey-burns-dev/portfolio)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+A modern, responsive portfolio website built with Astro, Tailwind CSS, and TypeScript. This project
+showcases my work, skills, and experience as a developer.
 
-## 🚀 Project Structure
+> 🚧 **This portfolio is currently under active development** - Features and content are being added
+> regularly!
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🛠️ Tech Stack
+
+- **Framework**: [Astro](https://astro.build/) - Static site generator
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- **Language**: TypeScript
+- **Package Manager**: pnpm
+- **Code Quality**: ESLint + Prettier with Husky pre-commit hooks
+
+## 📁 Project Structure
 
 ```text
 /
 ├── public/
 │   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── src/
+│   ├── assets/          # Images, icons, and other static assets
+│   ├── components/      # Reusable Astro components
+│   ├── data/           # Static data files (JSON, etc.)
+│   ├── layouts/        # Page layout components
+│   ├── pages/          # Route pages
+│   └── styles/         # Global styles and CSS
+├── .husky/             # Git hooks
+├── .vscode/            # VS Code settings
+└── astro.config.mjs    # Astro configuration
 ```
 
-To learn more about the folder structure of an Astro project, refer to
-[our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- pnpm
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/corey-burns-dev/portfolio.git
+cd portfolio
+
+# Install dependencies
+pnpm install
+```
+
+### Development
+
+```bash
+# Start the development server
+pnpm dev
+```
+
+Visit `http://localhost:4321` to see the site.
+
+### Build for Production
+
+```bash
+# Build the site
+pnpm build
+
+# Preview the production build
+pnpm preview
+```
 
 ## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+All commands are run from the root of the project:
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm lint`            | Run ESLint to check for code issues              |
-| `pnpm lint:fix`        | Run ESLint and automatically fix issues          |
-| `pnpm format`          | Format all files with Prettier                   |
-| `pnpm format:check`    | Check if files are properly formatted            |
-| `pnpm docker:dev`      | Run development server in Docker (port 4321)     |
-| `pnpm docker:prod`     | Run production build in Docker (port 8080)       |
-| `pnpm docker:build`    | Build Docker images                              |
-| `pnpm docker:down`     | Stop and remove Docker containers                |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| Command             | Action                                           |
+| :------------------ | :----------------------------------------------- |
+| `pnpm dev`          | Starts local dev server at `localhost:4321`      |
+| `pnpm build`        | Build your production site to `./dist/`          |
+| `pnpm preview`      | Preview your build locally, before deploying     |
+| `pnpm lint`         | Run ESLint to check for code issues              |
+| `pnpm lint:fix`     | Run ESLint and automatically fix issues          |
+| `pnpm format`       | Format all files with Prettier                   |
+| `pnpm format:check` | Check if files are properly formatted            |
+| `pnpm astro ...`    | Run CLI commands like `astro add`, `astro check` |
 
-## 🐳 Docker
+## 🔍 Code Quality
+
+This project uses ESLint and Prettier for code linting and formatting. These tools run automatically
+before each commit thanks to Husky and lint-staged.
+
+### Automatic Quality Checks
+
+- **Pre-commit hooks**: ESLint and Prettier run automatically on staged files before each commit
+- **File types checked**:
+  - JavaScript/TypeScript/Astro files: ESLint + Prettier
+  - JSON/CSS/Markdown/YAML files: Prettier only
+
+### Manual Quality Commands
+
+```bash
+# Check for linting issues
+pnpm lint
+
+# Fix linting issues automatically
+pnpm lint:fix
+
+# Format all files
+pnpm format
+
+# Check if files are properly formatted
+pnpm format:check
+```
+
+### Configuration
+
+- **ESLint**: Configured in `eslint.config.mjs` with Astro support
+- **Prettier**: Configured in `.prettierrc` with Astro plugin
+- **Husky**: Git hooks in `.husky/`
+- **lint-staged**: File-specific commands in `package.json`
+
+## 🐳 Docker Support
 
 This project includes Docker support for both development and production environments.
 
 ### Development with Docker
 
-```sh
+```bash
 # Start development server with hot-reload
 pnpm docker:dev
-
-# Or use docker compose directly
-docker compose up dev
 ```
 
 The dev server will be available at `http://localhost:4321` with live reloading.
 
 ### Production with Docker
 
-```sh
+```bash
 # Build and run production container
 pnpm docker:prod
-
-# Or use docker compose directly
-docker compose up prod
 ```
 
 The production site will be available at `http://localhost:8080` served by Nginx.
 
-### Docker Commands
+## 📝 Features (Work in Progress)
 
-```sh
-# Build images
-docker compose build
+- [x] Responsive design with Tailwind CSS
+- [x] Dark/light mode toggle
+- [x] Font switching (IBM Plex Sans & Clash Display)
+- [x] ESLint + Prettier with pre-commit hooks
+- [ ] Projects showcase
+- [ ] Blog posts
+- [ ] Contact form
+- [ ] Performance optimizations
+- [ ] SEO enhancements
 
-# Stop containers
-docker compose down
+## 🤝 Contributing
 
-# View logs
-docker compose logs -f
+This is a personal portfolio project, but feel free to:
 
-# Rebuild and restart
-docker compose up --build
-```
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-## 👀 Want to learn more?
+## 📄 License
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our
-[Discord server](https://astro.build/chat).
+This project is private and personal.
+
+## 📞 Contact
+
+### Corey Burns
+
+- GitHub: [@corey-burns-dev](https://github.com/corey-burns-dev)
+- LinkedIn: [Your LinkedIn Profile]
+- Email: vucp9bf5g@mozmail.com
+
+---
+
+_Built with ❤️ using Astro and Tailwind CSS_
