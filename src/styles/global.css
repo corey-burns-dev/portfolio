@@ -1,1 +1,166 @@
 @import 'tailwindcss';
+@import './fonts.css';
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Clash+Display:wght@500;600;700&display=swap');
+
+@layer base {
+  .font-ibmplex {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  }
+  .font-clash {
+    font-family: 'Clash Display', serif;
+  }
+}
+
+@layer base {
+  body {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.625;
+    color: rgb(31 41 55);
+  }
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.125rem;
+    }
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Clash Display', serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 3.75rem;
+    }
+  }
+  h2 {
+    font-size: 1.875rem;
+  }
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 2.25rem;
+    }
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    h3 {
+      font-size: 1.875rem;
+    }
+  }
+  h4,
+  h5,
+  h6 {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-weight: 500;
+  }
+  code,
+  pre,
+  kbd {
+    font-family:
+      ui-monospace, SFMono-Regular, 'SF Mono', Monaco, Inconsolata, 'Roboto Mono',
+      'Source Code Pro', monospace;
+    font-size: 0.875rem;
+  }
+}
+
+* {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.prose img {
+  border-radius: 30px;
+}
+
+#sun {
+  transform: translate3d(0, 0px, 0);
+}
+
+#moon {
+  transform: translate3d(0, 0px, 0);
+}
+
+#darkToggle:hover #sun {
+  transform: translate3d(0, 10px, 0);
+}
+
+#darkToggle:hover #moon {
+  transform: translate3d(0, 10px, 0);
+}
+
+html.dark #darkToggle:hover .horizon {
+  border-color: #718096 !important;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+.horizon .setting {
+  animation: 1s ease 0s 1 setting;
+}
+
+.horizon .rising {
+  animation: 1s ease 0s 1 rising;
+}
+
+@keyframes setting {
+  0% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  40% {
+    transform: translate3d(0, -2px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 30px, 0);
+  }
+}
+
+@keyframes rising {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translate3d(0, -2px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 10, 0);
+  }
+}
+
+@keyframes takeoff {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+.rocket {
+  animation: takeoff 3s ease-in-out;
+}

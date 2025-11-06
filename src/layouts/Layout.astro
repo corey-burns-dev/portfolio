@@ -1,6 +1,9 @@
 ---
+import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import SquareLines from '../components/square-lines.astro';
 import '../styles/global.css';
+import '../styles/fonts.css';
 const { title } = Astro.props;
 ---
 
@@ -11,68 +14,45 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <script is:inline>
+      (function () {
+        const root = document.documentElement;
+
+        function setTheme(isDark) {
+          if (isDark) root.classList.add('dark');
+          else root.classList.remove('dark');
+        }
+
+        try {
+          const stored = localStorage.getItem('theme');
+          if (stored === 'dark') {
+            setTheme(true);
+            return;
+          }
+          if (stored === 'light') {
+            setTheme(false);
+            return;
+          }
+        } catch (err) {
+          // localStorage might be unavailable (e.g., Safari private mode)
+          // eslint-disable-next-line no-console
+          console.warn('theme init: unable to read localStorage', err);
+        }
+
+        const prefersDark =
+          typeof window !== 'undefined' &&
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(prefersDark);
+      })();
+    </script>
   </head>
   <body
-    class="min-h-screen w-full h-full antialiased font-sans text-gray-900 dark:text-gray-100 bg-white dark:bg-neutral-950"
+    class="min-h-screen w-full h-full antialiased font-ibmplex text-gray-900 dark:text-gray-100 bg-white dark:bg-neutral-950"
   >
+    <SquareLines />
     <Header />
-
-    <!-- Font smoothing toggle: switches between `antialiased` and `subpixel-antialiased` -->
-    <button
-      id="font-smooth-toggle"
-      type="button"
-      class="fixed bottom-4 right-4 z-50 rounded-md bg-white/80 dark:bg-neutral-800/80 text-sm px-3 py-1.5 backdrop-blur-sm text-gray-800 dark:text-gray-100 hover:opacity-95 border border-gray-200 dark:border-neutral-800/60"
-      aria-pressed="false"
-      title="Toggle font smoothing"
-    >
-      Smooth: <span id="font-smooth-label" class="font-medium ml-2">Auto</span>
-    </button>
-
     <slot />
-
-    <script type="module">
-      const body = document.body;
-      const btn = document.getElementById('font-smooth-toggle');
-      const label = document.getElementById('font-smooth-label');
-
-      const STATES = {
-        ANTIALIASED: 'antialiased',
-        SUBPIXEL: 'subpixel-antialiased',
-      };
-
-      function applyState(state) {
-        body.classList.remove(STATES.ANTIALIASED, STATES.SUBPIXEL);
-        body.classList.add(state);
-        btn.setAttribute('aria-pressed', state === STATES.SUBPIXEL);
-        label.textContent = state === STATES.SUBPIXEL ? 'Subpixel' : 'Antialiased';
-      }
-
-      // Load saved preference or leave default (antialiased)
-      try {
-        const saved = localStorage.getItem('fontSmoothing');
-        if (saved === 'subpixel') applyState(STATES.SUBPIXEL);
-        else applyState(STATES.ANTIALIASED);
-      } catch (err) {
-        // LocalStorage may be unavailable in some environments (privacy mode).
-        // Log a warning for easier debugging without breaking UX.
-        // eslint-disable-next-line no-console
-        console.warn('fontSmoothing: could not read localStorage', err);
-      }
-
-      btn.addEventListener('click', () => {
-        const isSubpixel = body.classList.contains(STATES.SUBPIXEL);
-        const next = isSubpixel ? STATES.ANTIALIASED : STATES.SUBPIXEL;
-        applyState(next);
-        try {
-          localStorage.setItem(
-            'fontSmoothing',
-            next === STATES.SUBPIXEL ? 'subpixel' : 'antialiased'
-          );
-        } catch (err) {
-          // eslint-disable-next-line no-console
-          console.warn('fontSmoothing: could not write localStorage', err);
-        }
-      });
-    </script>
+    <Footer />
   </body>
 </html>

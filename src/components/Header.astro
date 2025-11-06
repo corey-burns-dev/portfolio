@@ -1,24 +1,139 @@
 ---
-
+import menuItems from '../data/menu.json';
 ---
 
 <header id="header" class="absolute top-0 z-50 w-full h-20">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
     <div class="text-lg font-bold">
-      <a href="/" class="text-gray-900 dark:text-gray-100 hover:underline">Corey Burns</a>
+      <a href="/" class="text-gray-900 dark:text-gray-100 hover:underline italic">Corey Burns</a>
     </div>
     <nav>
-      <ul class="flex space-x-6">
-        <li>
-          <a href="/about" class="text-gray-700 dark:text-gray-300 hover:underline">About</a>
-        </li>
-        <li>
-          <a href="/projects" class="text-gray-700 dark:text-gray-300 hover:underline">Projects</a>
-        </li>
-        <li>
-          <a href="/posts" class="text-gray-700 dark:text-gray-300 hover:underline">Posts</a>
+      <ul class="flex items-center space-x-6">
+        {
+          menuItems.map((item) => (
+            <li>
+              <a href={item.url} class="text-gray-700 dark:text-gray-300 hover:underline">
+                {item.name}
+              </a>
+            </li>
+          ))
+        }
+        <li class="flex items-center">
+          <button
+            id="font-toggle"
+            type="button"
+            class="ml-2 rounded-md bg-white/80 dark:bg-neutral-800/80 p-1.5 backdrop-blur-sm text-gray-800 dark:text-gray-100 hover:opacity-95 border border-gray-200 dark:border-neutral-800/60 flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            title="Cycle fonts"
+            aria-label="Cycle fonts"
+          >
+            <span class="text-sm font-bold">Aa</span>
+          </button>
+          <span id="current-font" class="ml-2 text-sm text-gray-700 dark:text-gray-300">
+            IBM Plex Sans
+          </span>
         </li>
       </ul>
     </nav>
+    <script type="module" is:inline>
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+
+      function setTheme(isDark) {
+        if (isDark) root.classList.add('dark');
+        else root.classList.remove('dark');
+        if (btn) btn.setAttribute('aria-pressed', isDark);
+        if (btn)
+          btn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+      }
+
+      // Initialize from localStorage or system preference
+      try {
+        const stored = localStorage.getItem('theme');
+        if (stored === 'dark') setTheme(true);
+        else if (stored === 'light') setTheme(false);
+        else {
+          const prefersDark =
+            window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          setTheme(prefersDark);
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.warn('theme: could not access localStorage', err);
+      }
+
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const isDark = root.classList.contains('dark');
+          const next = !isDark;
+          setTheme(next);
+          try {
+            localStorage.setItem('theme', next ? 'dark' : 'light');
+          } catch (err) {
+            // eslint-disable-next-line no-console
+            console.warn('theme: could not write localStorage', err);
+          }
+        });
+      }
+
+      // Font cycling
+      const fonts = [
+        'font-inter',
+        'font-manrope',
+        'font-satoshi',
+        'font-clash',
+        'font-spectral',
+        'font-fraunces',
+        'font-jetbrains',
+        'font-ibmplex',
+        'font-spacegrotesk',
+      ];
+      const fontNames = {
+        'font-inter': 'Inter',
+        'font-manrope': 'Manrope',
+        'font-satoshi': 'Satoshi',
+        'font-clash': 'Clash Display',
+        'font-spectral': 'Spectral',
+        'font-fraunces': 'Fraunces',
+        'font-jetbrains': 'JetBrains Mono',
+        'font-ibmplex': 'IBM Plex Sans',
+        'font-spacegrotesk': 'Space Grotesk',
+      };
+      const body = document.body;
+      const fontBtn = document.getElementById('font-toggle');
+      const fontDisplay = document.getElementById('current-font');
+
+      function setFont(fontClass) {
+        fonts.forEach((f) => body.classList.remove(f));
+        body.classList.add(fontClass);
+        if (fontDisplay) fontDisplay.textContent = fontNames[fontClass] || 'IBM Plex Sans';
+      }
+
+      // Initialize font from localStorage
+      try {
+        const storedFont = localStorage.getItem('font');
+        if (storedFont && fonts.includes(storedFont)) {
+          setFont(storedFont);
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.warn('font: could not access localStorage', err);
+      }
+
+      if (fontBtn) {
+        fontBtn.addEventListener('click', () => {
+          const currentFont = fonts.find((f) => body.classList.contains(f)) || fonts[0];
+          const currentIndex = fonts.indexOf(currentFont);
+          const nextIndex = (currentIndex + 1) % fonts.length;
+          const nextFont = fonts[nextIndex];
+          setFont(nextFont);
+          try {
+            localStorage.setItem('font', nextFont);
+          } catch (err) {
+            // eslint-disable-next-line no-console
+            console.warn('font: could not write localStorage', err);
+          }
+        });
+      }
+    </script>
   </div>
 </header>
