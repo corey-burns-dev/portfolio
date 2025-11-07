@@ -1,7 +1,4 @@
 ---
-import Footer from '../components/footer.astro';
-import Header from '../components/header.astro';
-import SquareLines from '../components/square-lines.astro';
 import '../styles/global.css';
 const { title } = Astro.props;
 ---
@@ -13,44 +10,17 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
-    <script is:inline>
-      (function () {
-        const root = document.documentElement;
-
-        function setTheme(isDark) {
-          if (isDark) root.classList.add('dark');
-          else root.classList.remove('dark');
-        }
-
-        try {
-          const stored = localStorage.getItem('theme');
-          if (stored === 'dark') {
-            setTheme(true);
-            return;
-          }
-          if (stored === 'light') {
-            setTheme(false);
-            return;
-          }
-        } catch (err) {
-          // localStorage might be unavailable (e.g., Safari private mode)
-          // eslint-disable-next-line no-console
-          console.warn('theme init: unable to read localStorage', err);
-        }
-
-        const prefersDark =
-          typeof window !== 'undefined' &&
-          window.matchMedia &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches;
-        setTheme(prefersDark);
-      })();
-    </script>
+    <meta
+      name="description"
+      content="Personal portfolio of Corey Burns, a software developer specializing in web development and modern technologies."
+    />
+    <meta name="author" content="Corey Burns" />
+    <meta
+      name="keywords"
+      content="Corey Burns, portfolio, software developer, web development, JavaScript, TypeScript, React, Node.js"
+    />
   </head>
-  <body class="antialiased bg-white dark:bg-neutral-950">
-    <SquareLines />
-    <Header />
+  <body class="antialiased bg-white dark:bg-black transition-colors duration-300">
     <slot />
-    <Footer />
-    <script src="../assets/js/index.js"></script>
   </body>
 </html>

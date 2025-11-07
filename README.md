@@ -145,9 +145,9 @@ The production site will be available at `http://localhost:8080` served by Nginx
 
 ## 📝 Features (Work in Progress)
 
-- [x] Responsive design with Tailwind CSS
-- [x] Dark/light mode toggle
-- [x] Font switching (IBM Plex Sans & Clash Display)
+- [ ] Responsive design with Tailwind CSS
+- [ ] Dark/light mode toggle
+- [ ] Font switching (IBM Plex Sans & Clash Display)
 - [x] ESLint + Prettier with pre-commit hooks
 - [ ] Projects showcase
 - [ ] Blog posts
