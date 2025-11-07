@@ -174,8 +174,8 @@ This project is private and personal.
 
 - GitHub: [@corey-burns-dev](https://github.com/corey-burns-dev)
 - LinkedIn: [Your LinkedIn Profile]
-- Email: vucp9bf5g@mozmail.com
+- Email: <vucp9bf5g@mozmail.com>
 
 ---
 
-_Built with ❤️ using Astro and Tailwind CSS_
+Built with ❤️ using Astro and Tailwind CSS\_
