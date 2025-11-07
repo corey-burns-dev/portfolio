@@ -12,7 +12,7 @@ export default [
     },
     rules: {
       // Custom rules
-      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': 'off', // Disabled for Astro files (template expressions)
       'no-console': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',
