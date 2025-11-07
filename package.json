@@ -11,14 +11,19 @@
     "lint:fix": "eslint . --ext .js,.mjs,.cjs,.astro --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "commit": "cz",
     "prepare": "husky"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@eslint/js": "^9.39.1",
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.15.4",
     "astro-eslint-parser": "^1.2.2",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.5.0",
@@ -36,5 +41,10 @@
     "*.{json,css,md,yml,yaml}": [
       "prettier --write"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
