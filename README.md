@@ -121,6 +121,62 @@ pnpm format:check
 - **Husky**: Git hooks in `.husky/`
 - **lint-staged**: File-specific commands in `package.json`
 
+## 📝 Commit Conventions
+
+This project follows [Conventional Commits](https://conventionalcommits.org/) specification to
+ensure consistent and meaningful commit messages.
+
+### How to Commit
+
+Instead of using `git commit -m "message"`, use the interactive commit tool:
+
+```bash
+pnpm run commit
+```
+
+This will launch an interactive prompt that guides you through creating properly formatted commit
+messages.
+
+### Commit Message Format
+
+```text
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer]
+```
+
+### Available Types
+
+- `feat` - A new feature
+- `fix` - A bug fix
+- `docs` - Documentation changes
+- `style` - Code style changes (formatting, etc.)
+- `refactor` - Code refactoring
+- `perf` - Performance improvements
+- `test` - Adding/fixing tests
+- `chore` - Maintenance tasks
+- `ci` - CI/CD changes
+- `build` - Build system changes
+- `revert` - Reverting commits
+
+### Examples
+
+```bash
+feat: add dark mode toggle
+fix(ui): resolve mobile layout issues
+chore: update dependencies
+docs: update installation guide
+```
+
+### Commit Validation
+
+All commits are automatically validated using Commitlint. Invalid commit messages will be rejected
+with helpful error messages.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed commit guidelines.
+
 ## 🐳 Docker Support
 
 This project includes Docker support for both development and production environments.
