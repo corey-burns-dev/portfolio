@@ -1,0 +1,70 @@
+name: Accessibility (axe + keyboard)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Ensure Puppeteer browser is installed
+        run: npx puppeteer install --product=chrome
+
+      - name: Build site
+        run: npx astro build
+
+      - name: Start static server
+        run: |
+          # Use a lightweight static server for the built `dist/` output.
+          npx http-server ./dist -p 4329 &
+          # Wait for the server to become ready
+          for i in {1..10}; do
+            if curl -sSf http://localhost:4329/ >/dev/null 2>&1; then
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Run accessibility tests
+        env:
+          CI: true
+        run: pnpm run a11y:test
+
+      - name: Fail on axe violations (ignore minor)
+        if: always()
+        run: |
+          if [ -f a11y-results.json ]; then
+            # Count only violations that are NOT impact == "minor"
+            violations=$(jq '[.axe.violations[] | select(.impact != "minor")] | length' a11y-results.json)
+            echo "axe non-minor violations: ${violations}"
+            if [ "${violations}" -gt 0 ]; then
+              echo "Accessibility non-minor violations detected — failing job"
+              jq '[.axe.violations[] | select(.impact != "minor")] | .[] | {id: .id, impact: .impact, nodes: (.nodes | length)}' a11y-results.json || true
+              exit 1
+            fi
+          else
+            echo "a11y-results.json not found"
+            exit 1
+          fi
+
+      - name: Upload accessibility results
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-results
+          path: |
+            a11y-results.json

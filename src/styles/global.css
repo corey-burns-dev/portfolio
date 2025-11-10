@@ -48,7 +48,7 @@
 
 .btn-outline-accent {
   border: 2px solid rgb(var(--color-accent));
-  color: rgb(var(--color-accent));
+  color: rgb(var(--color-text-primary));
   background: transparent;
 }
 
@@ -152,4 +152,32 @@
   }
 
   /* Theme toggle UI removed; site forces dark mode. End base layer. */
+}
+
+/* Nav link contrast fix: ensure small nav link text meets 4.5:1 on dark background */
+header nav a {
+  color: #bfdbfe; /* Tailwind blue-200 — lighter blue for sufficient contrast */
+  transition: color 0.2s ease;
+}
+
+header nav a:hover,
+header nav a:focus {
+  color: #93c5fd; /* Tailwind blue-300 on hover/focus */
+  text-decoration: underline;
+}
+
+/* Hero overlay to ensure heading contrast when the background is partially obscured */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* subtle dark overlay to guarantee text contrast over images/gradients */
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.45));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero .z-10 {
+  position: relative;
+  z-index: 10;
 }
