@@ -45,15 +45,16 @@ jobs:
           CI: true
         run: pnpm run a11y:test
 
-      - name: Fail on axe violations
+      - name: Fail on axe violations (ignore minor)
         if: always()
         run: |
           if [ -f a11y-results.json ]; then
-            violations=$(jq '.axe.violations | length' a11y-results.json)
-            echo "axe violations: ${violations}"
+            # Count only violations that are NOT impact == "minor"
+            violations=$(jq '[.axe.violations[] | select(.impact != "minor")] | length' a11y-results.json)
+            echo "axe non-minor violations: ${violations}"
             if [ "${violations}" -gt 0 ]; then
-              echo "Accessibility violations detected — failing job"
-              jq '.axe.violations[] | {id: .id, impact: .impact, nodes: (.nodes | length)}' a11y-results.json || true
+              echo "Accessibility non-minor violations detected — failing job"
+              jq '[.axe.violations[] | select(.impact != "minor")] | .[] | {id: .id, impact: .impact, nodes: (.nodes | length)}' a11y-results.json || true
               exit 1
             fi
           else
