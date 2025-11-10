@@ -11,13 +11,12 @@ const {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
 
     <!-- SEO -->
     <title>{title}</title>
@@ -39,82 +38,10 @@ const {
     <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={Astro.url} />
-    <script is:inline>
-      (function () {
-        try {
-          const stored = localStorage.getItem('theme');
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const shouldUseDark = stored ? stored === 'dark' : prefersDark;
-          document.documentElement.classList.toggle('dark', shouldUseDark);
-        } catch (error) {
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.classList.toggle('dark', prefersDark);
-        }
-      })();
-    </script>
+    <!-- Dark mode forced by default; theme toggle removed -->
   </head>
   <body class="antialiased">
-    <!-- Theme toggle moved into the Navbar component to avoid floating UI -->
     <Navbar />
     <slot />
-    <script is:inline>
-      const initTheme = () => {
-        const storageKey = 'theme';
-        const root = document.documentElement;
-        const toggles = Array.from(document.querySelectorAll('[data-theme-toggle]'));
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        const setToggleState = (isDark) => {
-          toggles.forEach((btn) => {
-            btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-            btn.classList.toggle('is-dark', isDark);
-            const sr = btn.querySelector('.sr-only');
-            if (sr) sr.textContent = isDark ? 'Switch to light mode' : 'Switch to dark mode';
-          });
-        };
-
-        const applyTheme = (value) => {
-          const isDark = value === 'dark';
-          root.classList.toggle('dark', isDark);
-          setToggleState(isDark);
-          try {
-            localStorage.setItem(storageKey, value);
-          } catch (error) {
-            // Ignore storage errors (e.g., private mode)
-          }
-        };
-
-        const getPreferredTheme = () => {
-          try {
-            const stored = localStorage.getItem(storageKey);
-            if (stored === 'dark' || stored === 'light') return stored;
-          } catch (error) {
-            // Ignore storage errors
-          }
-          return mediaQuery.matches ? 'dark' : 'light';
-        };
-
-        const syncTheme = () => {
-          const next = getPreferredTheme();
-          applyTheme(next);
-        };
-
-        mediaQuery.addEventListener('change', syncTheme);
-        toggles.forEach((btn) =>
-          btn.addEventListener('click', () => {
-            const current = root.classList.contains('dark') ? 'dark' : 'light';
-            applyTheme(current === 'dark' ? 'light' : 'dark');
-          })
-        );
-
-        syncTheme();
-      };
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initTheme);
-      } else {
-        initTheme();
-      }
-    </script>
   </body>
 </html>

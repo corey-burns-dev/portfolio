@@ -33,17 +33,13 @@ import photo from '../assets/photo.jpg';
           <div class="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
             <a
               href="/projects"
-              class="rounded-lg px-8 py-3 font-semibold transition-colors"
-              style="background-color: rgb(var(--color-accent)); color: #fff;"
+              class="btn-accent rounded-lg px-8 py-3 font-semibold transition-colors"
             >
               View My Work
             </a>
             <a
               href="/contact"
-              class="rounded-lg border-2 px-8 py-3 font-semibold transition-colors"
-              style="border-color: rgb(var(--color-accent)); color: rgb(var(--color-accent));"
-              onmouseover="this.style.backgroundColor='rgb(var(--color-accent))';this.style.color='#fff'"
-              onmouseout="this.style.backgroundColor='';this.style.color='rgb(var(--color-accent))'"
+              class="btn-outline-accent rounded-lg border-2 px-8 py-3 font-semibold transition-colors"
             >
               Get In Touch
             </a>
@@ -68,17 +64,6 @@ import photo from '../assets/photo.jpg';
       </div>
     </div>
 
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
-      <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M19 14l-7 7m0 0l-7-7m7 7V3"
-        >
-        </path>
-      </svg>
-    </div>
+    <!-- Scroll indicator removed per user request -->
   </section>
 </Layout>

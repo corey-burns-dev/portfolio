@@ -20,9 +20,16 @@ const navLinks = [
               target="_blank"
               rel="noopener"
               aria-label="GitHub"
+              class="group inline-flex items-center text-gray-700 transition-colors duration-200 hover:text-[rgb(var(--color-accent))] dark:text-gray-200"
             >
-              <svg class="h-7 w-7" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+              <svg
+                class="h-7 w-7 transform transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <path
+                  fill="currentColor"
                   d="M12 2C6.477 2 2 6.484 2 12.012c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.529 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.747-1.025 2.747-1.025.546 1.378.202 2.397.099 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.579.688.481C19.138 20.19 22 16.436 22 12.012 22 6.484 17.523 2 12 2z"
                 >
                 </path>
@@ -33,9 +40,16 @@ const navLinks = [
               target="_blank"
               rel="noopener"
               aria-label="LinkedIn"
+              class="group inline-flex items-center text-gray-700 transition-colors duration-200 hover:text-[rgb(var(--color-accent))] dark:text-gray-200"
             >
-              <svg class="h-7 w-7" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+              <svg
+                class="h-7 w-7 transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <path
+                  fill="currentColor"
                   d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.026-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.841-1.563 3.039 0 3.601 2.001 3.601 4.601v5.595z"
                 >
                 </path>
@@ -46,9 +60,16 @@ const navLinks = [
               target="_blank"
               rel="noopener"
               aria-label="Twitter"
+              class="group inline-flex items-center text-gray-700 transition-colors duration-200 hover:text-[rgb(var(--color-accent))] dark:text-gray-200"
             >
-              <svg class="h-7 w-7" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+              <svg
+                class="h-7 w-7 transform transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-3"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <path
+                  fill="currentColor"
                   d="M24 4.557a9.93 9.93 0 01-2.828.775 4.932 4.932 0 002.165-2.724c-.951.564-2.005.974-3.127 1.195a4.916 4.916 0 00-8.38 4.482C7.691 8.094 4.066 6.13 1.64 3.161c-.543.929-.855 2.01-.855 3.17 0 2.188 1.115 4.117 2.823 5.254a4.904 4.904 0 01-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 01-2.224.084c.627 1.956 2.444 3.377 4.6 3.418A9.867 9.867 0 010 21.543a13.94 13.94 0 007.548 2.212c9.058 0 14.009-7.513 14.009-14.009 0-.213-.005-.425-.014-.636A10.025 10.025 0 0024 4.557z"
                 >
                 </path>
@@ -63,47 +84,20 @@ const navLinks = [
             navLinks.map((link) => (
               <a
                 href={link.href}
-                class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-200"
+                class="text-sm font-medium text-gray-700 transition-colors duration-300 hover:text-gray-900 hover:underline dark:text-gray-200"
               >
                 {link.label}
               </a>
             ))
           }
-          <!-- Theme toggle (desktop) -->
+          <!-- Contrast testing button: cycles through contrast modes -->
           <button
-            data-theme-toggle
-            class="theme-toggle theme-toggle--mobile-floating ml-2"
+            id="contrast-toggle"
+            class="ml-4 rounded-md border bg-transparent px-3 py-1 text-sm font-medium text-gray-200 hover:bg-gray-800"
             type="button"
-            aria-label="Toggle color theme"
-            aria-pressed="false"
+            aria-label="Cycle contrast modes"
           >
-            <span class="sr-only">Toggle color theme</span>
-            <!-- Sun icon -->
-            <svg
-              aria-hidden="true"
-              class="icon icon-sun h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <circle cx="12" cy="12" r="4"></circle>
-              <path
-                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-              >
-              </path>
-            </svg>
-            <!-- Moon icon -->
-            <svg
-              aria-hidden="true"
-              class="icon icon-moon h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-            </svg>
+            Contrast: default
           </button>
         </div>
 
@@ -180,40 +174,14 @@ const navLinks = [
         </a>
       </div>
       <div class="border-t border-gray-100 px-3 py-3 dark:border-gray-800">
-        <!-- Theme toggle (mobile) -->
+        <!-- Mobile contrast control -->
         <button
-          data-theme-toggle
-          class="theme-toggle w-full text-left"
+          id="contrast-toggle-mobile"
+          class="w-full rounded-md border bg-transparent px-3 py-2 text-sm font-medium text-gray-200"
           type="button"
-          aria-label="Toggle color theme"
-          aria-pressed="false"
+          aria-label="Cycle contrast modes"
         >
-          <span class="sr-only">Toggle color theme</span>
-          <svg
-            aria-hidden="true"
-            class="icon icon-sun mr-2 inline-block h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <circle cx="12" cy="12" r="4"></circle>
-            <path
-              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-            >
-            </path>
-          </svg>
-          <svg
-            aria-hidden="true"
-            class="icon icon-moon mr-2 inline-block h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-          </svg>
-          <span>Dark mode</span>
+          Contrast: default
         </button>
       </div>
     </div>
@@ -237,6 +205,62 @@ const navLinks = [
           }
         });
       }
+
+      // Contrast mode tester
+      (function () {
+        const MODES = [null, 'darker-accent', 'dark-on-accent', 'outline'];
+        const CLASS_MAP = {
+          'darker-accent': 'contrast-mode--darker-accent',
+          'dark-on-accent': 'contrast-mode--dark-on-accent',
+          outline: 'contrast-mode--outline',
+        };
+
+        const btn = document.getElementById('contrast-toggle');
+        const mobileBtn = document.getElementById('contrast-toggle-mobile');
+
+        const labels = {
+          null: 'Contrast: default',
+          'darker-accent': 'Contrast: darker accent',
+          'dark-on-accent': 'Contrast: dark text on accent',
+          outline: 'Contrast: accent outline',
+        };
+
+        function applyMode(mode) {
+          // remove all mode classes, then add the requested one
+          Object.values(CLASS_MAP).forEach((c) => document.documentElement.classList.remove(c));
+          if (mode && CLASS_MAP[mode]) document.documentElement.classList.add(CLASS_MAP[mode]);
+          try {
+            localStorage.setItem('contrastMode', mode || '');
+          } catch (e) {
+            // ignore
+          }
+          updateButtons(mode);
+        }
+
+        function updateButtons(mode) {
+          const label = labels[mode] || labels.null;
+          if (btn) btn.textContent = label;
+          if (mobileBtn) mobileBtn.textContent = label;
+        }
+
+        function cycleMode() {
+          const stored = localStorage.getItem('contrastMode') || '' || '';
+          const idx = MODES.indexOf(stored || null);
+          const next = MODES[(idx + 1) % MODES.length];
+          applyMode(next);
+        }
+
+        if (btn) btn.addEventListener('click', cycleMode);
+        if (mobileBtn) mobileBtn.addEventListener('click', cycleMode);
+
+        // init
+        try {
+          const stored = localStorage.getItem('contrastMode');
+          if (stored) applyMode(stored || null);
+        } catch (e) {
+          // ignore
+        }
+      })();
     </script>
   </nav>
 </header>

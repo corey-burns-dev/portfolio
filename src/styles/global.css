@@ -3,31 +3,7 @@
 
 /* CSS Variables for theming */
 :root {
-  /* Neutral palette (light theme) */
-  --neutral-100: 255 255 255;
-  --neutral-200: 249 250 251;
-  --neutral-300: 229 231 235;
-  --neutral-500: 107 114 128;
-  --neutral-600: 75 85 99;
-  --neutral-700: 31 41 55;
-
-  /* Semantic tokens referencing neutrals */
-  --color-bg-primary: var(--neutral-100);
-  --color-bg-secondary: var(--neutral-200);
-  --color-text-primary: var(--neutral-700);
-  --color-text-secondary: var(--neutral-600);
-  --color-text-muted: var(--neutral-500);
-  --color-border: var(--neutral-300);
-  --color-accent: 59 130 246;
-  --color-accent-hover: 37 99 235;
-
-  --font-mono:
-    ui-monospace, 'SF Mono', Monaco, 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
-    'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-}
-
-html.dark {
-  /* Neutral palette overrides (dark theme) */
+  /* Dark theme (forced) - primary tokens */
   --neutral-100: 17 24 39;
   --neutral-200: 31 41 55;
   --neutral-300: 55 65 81;
@@ -35,22 +11,80 @@ html.dark {
   --neutral-600: 209 213 219;
   --neutral-700: 243 244 246;
 
-  /* Semantic tokens reuse neutral mappings */
   --color-bg-primary: var(--neutral-100);
   --color-bg-secondary: var(--neutral-200);
   --color-text-primary: var(--neutral-700);
   --color-text-secondary: var(--neutral-600);
   --color-text-muted: var(--neutral-500);
   --color-border: var(--neutral-300);
-  --color-accent: 96 165 250;
-  --color-accent-hover: 59 130 246;
-  color-scheme: dark;
+  --color-accent: 37 99 235; /* darker accent for better contrast (was 96 165 250) */
+  --color-accent-hover: 29 78 216;
+
+  --font-mono:
+    ui-monospace, 'SF Mono', Monaco, 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
+    'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+}
+
+/* Contrast testing utilities
+   - Use these classes on the `html` element to quickly test contrast fixes.
+   - Cycle modes with the navbar control. */
+.contrast-mode--darker-accent {
+  --color-accent: 37 99 235;
+  --color-accent-hover: 29 78 216;
+}
+
+.contrast-mode--dark-on-accent .btn-accent {
+  color: rgb(var(--color-text-primary)) !important;
+}
+
+.contrast-mode--outline .btn-accent {
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.btn-accent {
+  background-color: rgb(var(--color-accent));
+  color: #fff;
+}
+
+.btn-outline-accent {
+  border: 2px solid rgb(var(--color-accent));
+  color: rgb(var(--color-accent));
+  background: transparent;
+}
+
+.btn-outline-accent:hover {
+  background-color: rgb(var(--color-accent));
+  color: #fff;
+}
+
+/* Small badge utilities for project tech tags */
+.badge-accent {
+  background-color: rgb(var(--color-accent));
+  color: #fff;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.badge-accent-hover {
+  background-color: rgb(var(--color-accent-hover));
+  color: #fff;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* Accent link utility */
+.link-accent {
+  color: rgb(var(--color-accent));
 }
 
 @layer base {
-  /* Smooth scrolling */
+  /* Force each page to occupy one viewport and prevent scrolling */
   :where(html) {
     scroll-behavior: smooth;
+    height: 100vh;
+    overflow: hidden;
   }
 
   :where(body) {
@@ -59,6 +93,8 @@ html.dark {
       sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
     font-size: 1rem;
     line-height: 1.625;
+    height: 100vh;
+    overflow: hidden;
     color: rgb(var(--color-text-primary));
     background-color: rgb(var(--color-bg-primary));
     transition:
@@ -115,97 +151,5 @@ html.dark {
     white-space: normal;
   }
 
-  :where(.theme-toggle) {
-    /* Inline by default so it lives inside the navbar layout */
-    position: static;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.75rem;
-    border-radius: 9999px;
-    border: 1px solid rgb(var(--color-border));
-    background-color: rgb(var(--color-bg-secondary));
-    color: rgb(var(--color-text-primary));
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition:
-      background-color 0.2s ease,
-      color 0.2s ease,
-      border-color 0.2s ease;
-    cursor: pointer;
-  }
-
-  /* If you want a floating button in other contexts, use the modifier */
-  :where(.theme-toggle--floating) {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 50;
-    display: inline-flex;
-  }
-
-  :where(.theme-toggle:hover) {
-    color: rgb(var(--color-accent));
-  }
-
-  :where(.theme-toggle:focus-visible) {
-    outline: 2px solid rgb(var(--color-accent));
-    outline-offset: 0.25rem;
-  }
-
-  /* Icon transitions for theme toggle */
-  /* Icon transitions for theme toggle
-     - Ensure SVG strokes use the theme text color so icons are always visible
-     - Add subtle transform/opacity transitions for a smoother toggle animation */
-  :where(.theme-toggle .icon) {
-    color: inherit;
-    /* Make strokes explicit so SVGs are visible even if other rules change */
-    stroke: rgb(var(--color-text-primary));
-    fill: none;
-    will-change: transform, opacity, stroke;
-    transition:
-      transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
-      opacity 200ms ease,
-      stroke 180ms linear;
-    opacity: 1;
-    transform-origin: center;
-  }
-
-  /* Default: sun visible, moon slightly hidden (preparing to animate in) */
-  :where(.theme-toggle) .icon-sun {
-    opacity: 1;
-    transform: rotate(0) scale(1);
-  }
-
-  :where(.theme-toggle) .icon-moon {
-    opacity: 0;
-    transform: translateY(-6px) rotate(-10deg) scale(0.92);
-  }
-
-  /* When dark, show moon and hide sun via .is-dark state on the button */
-  :where(.theme-toggle.is-dark) .icon-sun {
-    opacity: 0;
-    transform: rotate(-20deg) scale(0.85);
-  }
-
-  :where(.theme-toggle.is-dark) .icon-moon {
-    opacity: 1;
-    transform: translateY(0) rotate(0) scale(1);
-  }
-
-  /* Mobile floating behavior: show as fixed on small screens when using the modifier */
-  @media (max-width: 767px) {
-    :where(.theme-toggle--mobile-floating) {
-      position: fixed;
-      right: 1rem;
-      bottom: 1rem;
-      z-index: 60;
-      display: inline-flex;
-      box-shadow: 0 6px 18px rgba(2, 6, 23, 0.12);
-    }
-    /* Slightly reduce padding on small screens */
-    :where(.theme-toggle) {
-      padding: 0.35rem 0.6rem;
-    }
-  }
+  /* Theme toggle UI removed; site forces dark mode. End base layer. */
 }
