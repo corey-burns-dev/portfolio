@@ -165,3 +165,19 @@ header nav a:focus {
   color: #93c5fd; /* Tailwind blue-300 on hover/focus */
   text-decoration: underline;
 }
+
+/* Hero overlay to ensure heading contrast when the background is partially obscured */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* subtle dark overlay to guarantee text contrast over images/gradients */
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.45));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero .z-10 {
+  position: relative;
+  z-index: 10;
+}
