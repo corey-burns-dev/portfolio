@@ -6,7 +6,6 @@
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
   "editor.formatOnSave": true,
-  "editor.rulers": [100],
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 100,
   "editor.codeActionsOnSave": {

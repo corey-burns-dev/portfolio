@@ -1,4 +1,5 @@
 ---
+import Navbar from '@components/Navbar.astro';
 import '@styles/global.css';
 
 const {
@@ -51,61 +52,73 @@ const {
         }
       })();
     </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+    </style>
   </head>
   <body class="antialiased">
-    <button
-      data-theme-toggle
-      class="theme-toggle"
-      type="button"
-      aria-label="Toggle color theme"
-      aria-pressed="false"
-    >
-      Dark mode
-    </button>
+    <!-- Theme toggle moved into the Navbar component to avoid floating UI -->
+    <Navbar />
     <slot />
     <script is:inline>
-      const storageKey = 'theme';
-      const root = document.documentElement;
-      const toggleButton = document.querySelector('[data-theme-toggle]');
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const initTheme = () => {
+        const storageKey = 'theme';
+        const root = document.documentElement;
+        const toggles = Array.from(document.querySelectorAll('[data-theme-toggle]'));
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-      const applyTheme = (value) => {
-        root.classList.toggle('dark', value === 'dark');
-        toggleButton?.setAttribute('aria-pressed', value === 'dark' ? 'true' : 'false');
-        if (toggleButton) {
-          toggleButton.textContent = value === 'dark' ? 'Light mode' : 'Dark mode';
-        }
-        try {
-          localStorage.setItem(storageKey, value);
-        } catch (error) {
-          // Ignore storage errors (e.g., private mode)
-        }
-      };
+        const setToggleState = (isDark) => {
+          toggles.forEach((btn) => {
+            btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+            btn.classList.toggle('is-dark', isDark);
+            const sr = btn.querySelector('.sr-only');
+            if (sr) sr.textContent = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+          });
+        };
 
-      const getPreferredTheme = () => {
-        try {
-          const stored = localStorage.getItem(storageKey);
-          if (stored === 'dark' || stored === 'light') {
-            return stored;
+        const applyTheme = (value) => {
+          const isDark = value === 'dark';
+          root.classList.toggle('dark', isDark);
+          setToggleState(isDark);
+          try {
+            localStorage.setItem(storageKey, value);
+          } catch (error) {
+            // Ignore storage errors (e.g., private mode)
           }
-        } catch (error) {
-          // Ignore storage errors
-        }
-        return mediaQuery.matches ? 'dark' : 'light';
+        };
+
+        const getPreferredTheme = () => {
+          try {
+            const stored = localStorage.getItem(storageKey);
+            if (stored === 'dark' || stored === 'light') return stored;
+          } catch (error) {
+            // Ignore storage errors
+          }
+          return mediaQuery.matches ? 'dark' : 'light';
+        };
+
+        const syncTheme = () => {
+          const next = getPreferredTheme();
+          applyTheme(next);
+        };
+
+        mediaQuery.addEventListener('change', syncTheme);
+        toggles.forEach((btn) =>
+          btn.addEventListener('click', () => {
+            const current = root.classList.contains('dark') ? 'dark' : 'light';
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+          })
+        );
+
+        syncTheme();
       };
 
-      const syncTheme = () => {
-        const next = getPreferredTheme();
-        applyTheme(next);
-      };
-
-      mediaQuery.addEventListener('change', syncTheme);
-      toggleButton?.addEventListener('click', () => {
-        const current = root.classList.contains('dark') ? 'dark' : 'light';
-        applyTheme(current === 'dark' ? 'light' : 'dark');
-      });
-
-      syncTheme();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTheme);
+      } else {
+        initTheme();
+      }
     </script>
   </body>
 </html>

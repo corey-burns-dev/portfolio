@@ -1,12 +1,84 @@
 ---
+// Backup of index.astro before hero redesign
 import Layout from '@layouts/main.astro';
+import photo from '../assets/photo.jpg';
 ---
 
 <Layout
   title="Corey Burns - Portfolio"
   description="Welcome to my portfolio. Full-stack developer crafting beautiful, performant web experiences."
 >
-  <main class="flex min-h-screen flex-col items-center justify-center text-center">
-    <h1>Under construction</h1>
-  </main>
+  <!-- Hero Section -->
+  <section
+    class="relative flex min-h-screen items-center"
+    style="background-color: rgb(var(--color-bg-primary)); color: rgb(var(--color-text-primary));"
+  >
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+        <!-- Text Content -->
+        <div class="text-center lg:text-left">
+          <h1
+            class="mb-6 text-4xl font-bold sm:text-5xl lg:text-6xl"
+            style="color: rgb(var(--color-text-primary));"
+          >
+            Hi, I'm <span style="color: rgb(var(--color-accent));">Corey Burns</span>
+          </h1>
+          <p class="mb-8 text-xl sm:text-2xl" style="color: rgb(var(--color-text-secondary));">
+            Full-Stack Developer Crafting Digital Experiences
+          </p>
+          <p class="mb-8 max-w-2xl text-lg" style="color: rgb(var(--color-text-muted));">
+            I transform ideas into beautiful, performant web applications. From responsive designs
+            to robust backends, I love building solutions that make a difference.
+          </p>
+          <div class="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
+            <a
+              href="/projects"
+              class="rounded-lg px-8 py-3 font-semibold transition-colors"
+              style="background-color: rgb(var(--color-accent)); color: #fff;"
+            >
+              View My Work
+            </a>
+            <a
+              href="/contact"
+              class="rounded-lg border-2 px-8 py-3 font-semibold transition-colors"
+              style="border-color: rgb(var(--color-accent)); color: rgb(var(--color-accent));"
+              onmouseover="this.style.backgroundColor='rgb(var(--color-accent))';this.style.color='#fff'"
+              onmouseout="this.style.backgroundColor='';this.style.color='rgb(var(--color-accent))'"
+            >
+              Get In Touch
+            </a>
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div class="flex justify-center lg:justify-end">
+          <div class="relative">
+            <div
+              class="absolute -inset-4 rounded-full bg-linear-to-r from-blue-400 to-purple-500 opacity-30 blur-lg"
+            >
+            </div>
+            <img
+              src={photo.src}
+              alt="Corey Burns - Full-Stack Developer"
+              class="relative h-80 w-80 rounded-full border-4 object-cover shadow-2xl lg:h-96 lg:w-96"
+              style="border-color: rgb(var(--color-bg-secondary));"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
+      <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 14l-7 7m0 0l-7-7m7 7V3"
+        >
+        </path>
+      </svg>
+    </div>
+  </section>
 </Layout>

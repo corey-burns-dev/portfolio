@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/main.astro';
+
+const title = 'Skills - Corey Burns';
+const description =
+  'Explore the technical skills and expertise of Corey Burns as a full-stack developer.';
+---
+
+<Layout title={title} description={description}>
+  <section
+    class="py-16"
+    style="background-color: rgb(var(--color-bg-primary)); color: rgb(var(--color-text-primary));"
+  >
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+        <!-- Synopsis Column -->
+        <div>
+          <h2 class="mb-6 text-2xl font-semibold" style="color: rgb(var(--color-text-primary));">
+            About My Skills
+          </h2>
+          <div class="prose prose-lg mx-auto" style="color: rgb(var(--color-text-secondary));">
+            <p class="mb-4">
+              As a full-stack developer, I specialize in creating robust, scalable web applications
+              using modern technologies. My expertise spans both frontend and backend development,
+              with a focus on performance, accessibility, and user experience.
+            </p>
+            <p class="mb-4">
+              I have extensive experience with JavaScript frameworks like React and Astro, and I'm
+              proficient in server-side technologies including Node.js and various databases. I'm
+              passionate about writing clean, maintainable code and staying up-to-date with the
+              latest industry trends.
+            </p>
+            <p style="color: rgb(var(--color-text-muted));">
+              Whether it's building responsive websites, optimizing performance, or implementing
+              complex features, I approach each project with enthusiasm and attention to detail.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tech Badges Column -->
+
+        <section
+          class="bg-primary flex w-full flex-col items-center justify-center text-white md:px-8 lg:min-h-screen xl:px-20"
+        >
+          <div class="flex w-full max-w-5xl flex-col items-center justify-center py-8">
+            <!-- Heading and Description -->
+            <div class="mb-6 w-full text-center">
+              <h2
+                class="mb-2 text-center text-2xl font-bold text-neutral-900 sm:text-3xl dark:text-white"
+              >
+                Explore My Expertise & Tech Stack
+              </h2>
+              <p class="mb-6 text-center text-neutral-700 dark:text-neutral-300">
+                These are the tools and technologies I use as a full stack developer with a passion
+                for AI integration. I leverage modern stacks to build scalable, intelligent web
+                applications—spanning both frontend and backend for robust, maintainable, and
+                user-friendly solutions.
+              </p>
+            </div>
+            <!-- Skills Icon Image -->
+            <img
+              src="https://skillicons.dev/icons?i=ansible,arch,astro,babel,bitbucket,bun,debian,emotion,go,angular,atom,aws,azure,bash,bootstrap,cs,cloudflare,codepen,css,docker,dotnet,express,firebase,gcp,git,kubernetes,laravel,github,githubactions,gitlab,heroku,html,js,jquery,linkedin,linux,md,mongodb,mysql,netlify,nextjs,nginx,nodejs,ps,php,svelte,electron,postgres,powershell,py,redis,remix,sqlite,tailwind,ts,pytorch,graphql,qt,react,redux,regex,sass,svg,tensorflow,twitter,unity,vercel,visualstudio,vite,vscode,vue,webflow,webpack,wordpress&perline=15"
+              alt="My Skills"
+              class="h-auto w-full max-w-3xl rounded-lg bg-transparent transition-transform duration-300 hover:scale-105"
+              width="1200"
+              height="200"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -116,14 +116,12 @@ html.dark {
   }
 
   :where(.theme-toggle) {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 50;
+    /* Inline by default so it lives inside the navbar layout */
+    position: static;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.4rem 0.9rem;
+    padding: 0.35rem 0.75rem;
     border-radius: 9999px;
     border: 1px solid rgb(var(--color-border));
     background-color: rgb(var(--color-bg-secondary));
@@ -137,6 +135,15 @@ html.dark {
     cursor: pointer;
   }
 
+  /* If you want a floating button in other contexts, use the modifier */
+  :where(.theme-toggle--floating) {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 50;
+    display: inline-flex;
+  }
+
   :where(.theme-toggle:hover) {
     color: rgb(var(--color-accent));
   }
@@ -144,5 +151,61 @@ html.dark {
   :where(.theme-toggle:focus-visible) {
     outline: 2px solid rgb(var(--color-accent));
     outline-offset: 0.25rem;
+  }
+
+  /* Icon transitions for theme toggle */
+  /* Icon transitions for theme toggle
+     - Ensure SVG strokes use the theme text color so icons are always visible
+     - Add subtle transform/opacity transitions for a smoother toggle animation */
+  :where(.theme-toggle .icon) {
+    color: inherit;
+    /* Make strokes explicit so SVGs are visible even if other rules change */
+    stroke: rgb(var(--color-text-primary));
+    fill: none;
+    will-change: transform, opacity, stroke;
+    transition:
+      transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 200ms ease,
+      stroke 180ms linear;
+    opacity: 1;
+    transform-origin: center;
+  }
+
+  /* Default: sun visible, moon slightly hidden (preparing to animate in) */
+  :where(.theme-toggle) .icon-sun {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  :where(.theme-toggle) .icon-moon {
+    opacity: 0;
+    transform: translateY(-6px) rotate(-10deg) scale(0.92);
+  }
+
+  /* When dark, show moon and hide sun via .is-dark state on the button */
+  :where(.theme-toggle.is-dark) .icon-sun {
+    opacity: 0;
+    transform: rotate(-20deg) scale(0.85);
+  }
+
+  :where(.theme-toggle.is-dark) .icon-moon {
+    opacity: 1;
+    transform: translateY(0) rotate(0) scale(1);
+  }
+
+  /* Mobile floating behavior: show as fixed on small screens when using the modifier */
+  @media (max-width: 767px) {
+    :where(.theme-toggle--mobile-floating) {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 60;
+      display: inline-flex;
+      box-shadow: 0 6px 18px rgba(2, 6, 23, 0.12);
+    }
+    /* Slightly reduce padding on small screens */
+    :where(.theme-toggle) {
+      padding: 0.35rem 0.6rem;
+    }
   }
 }
