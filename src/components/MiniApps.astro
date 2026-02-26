@@ -1,0 +1,129 @@
+---
+import { Image, Picture } from 'astro:assets';
+import bgImage from '../assets/bg/spiralarch.webp';
+import cameraImage from '../assets/images/camera.webp';
+import coinsImage from '../assets/images/coins.webp';
+import diceImage from '../assets/images/dice.webp';
+import lotteryImage from '../assets/images/lottery.webp';
+import luggageImage from '../assets/images/luggage.webp';
+import monstersImage from '../assets/images/monsters.webp';
+import pizzaImage from '../assets/images/pizza.webp';
+import { miniapps } from '../data/miniapps';
+
+const imageMap = {
+  '/images/camera.webp': cameraImage,
+  '/images/dice.webp': diceImage,
+  '/images/lottery.webp': lotteryImage,
+  '/images/luggage.webp': luggageImage,
+  '/images/pizza.webp': pizzaImage,
+  '/images/monsters.webp': monstersImage,
+  '/images/coins.webp': coinsImage,
+};
+---
+
+<section
+  id='apps'
+  class='relative'
+>
+  <div class='absolute inset-0 -z-10'>
+    <Image
+      src={bgImage}
+      alt=''
+      class='h-full w-full object-cover opacity-20'
+      loading='lazy'
+      widths={[480, 640, 960]}
+      sizes='100vw'
+      quality={50}
+    />
+  </div>
+  <div
+    class='mx-auto max-w-7xl px-6 pt-8 pb-5 text-center opacity-0 pointer-events-none select-none'
+  >
+    <p class='text-[11px] uppercase tracking-[0.45em] text-slate-500 font-extrabold'>
+      Small but mighty
+    </p>
+    <h2 class='mt-3 font-heading fluid-h2 font-black text-slate-800'>Mini Experiments</h2>
+    <div
+      class='mx-auto mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-teal-400 via-sky-400 to-indigo-400'
+    >
+    </div>
+  </div>
+  <div class='mx-auto max-w-7xl px-6 pb-24'>
+    <div class='grid gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6'>
+      {
+        miniapps.map(app => (
+          <article class='overflow-hidden rounded-2xl glass hover:-translate-y-1 transition-transform flex flex-col'>
+            <header class='bg-white/70 px-3 py-2 text-center fluid-ui font-semibold text-slate-700 uppercase tracking-[0.1em]'>
+              {app.title}
+            </header>
+            <Picture
+              src={imageMap[app.image as keyof typeof imageMap]}
+              alt={`mini app ${app.title}`}
+              formats={['avif', 'webp']}
+              loading='lazy'
+              widths={[240, 320, 480]}
+              sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, (max-width: 1536px) 25vw, 20vw'
+              quality={70}
+              class='block w-full aspect-[4/3] h-full object-cover'
+            />
+            <div class='p-3 fluid-small text-slate-600'>{app.excerpt}</div>
+            <div class='mt-auto flex items-center justify-center gap-2 px-3 pb-3'>
+              <a
+                class='rounded-full bg-white/70 px-2.5 py-1.5 text-[11px] font-extrabold text-slate-800 border border-white/70'
+                href={app.gitUrl}
+                target='_blank'
+                rel='noreferrer'
+              >
+                <svg
+                  aria-hidden='true'
+                  viewBox='0 0 24 24'
+                  class='mr-1.5 inline-block h-3 w-3 align-[-2px] text-slate-500'
+                >
+                  <path
+                    d='M8 7 4 12l4 5M16 7l4 5-4 5'
+                    fill='none'
+                    stroke='currentColor'
+                    stroke-width='1.7'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                  />
+                </svg>
+                Source
+              </a>
+              <a
+                class='rounded-full bg-indigo-600 px-2.5 py-1.5 text-[11px] font-extrabold text-white'
+                href={app.webUrl}
+                target='_blank'
+                rel='noreferrer'
+              >
+                <svg
+                  aria-hidden='true'
+                  viewBox='0 0 24 24'
+                  class='mr-1.5 inline-block h-3 w-3 align-[-2px] text-white/90'
+                >
+                  <path
+                    d='M8.5 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3.5'
+                    fill='none'
+                    stroke='currentColor'
+                    stroke-width='1.6'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                  />
+                  <path
+                    d='M14 3h7v7M10 14 21 3'
+                    fill='none'
+                    stroke='currentColor'
+                    stroke-width='1.6'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                  />
+                </svg>
+                Demo
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

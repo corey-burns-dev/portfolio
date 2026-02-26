@@ -1,0 +1,13 @@
+---
+const { title, subtitle, className = '' } = Astro.props;
+const label = title?.charAt(0).toUpperCase() + title?.slice(1);
+---
+
+<section class={`py-8 lg:py-10 opacity-0 pointer-events-none select-none ${className}`}>
+  <div class='mx-auto max-w-7xl px-6 text-center'>
+    <h2 class='font-heading fluid-h2 font-black tracking-tight text-slate-400/80'>
+      {label}
+    </h2>
+    {subtitle ? <p class='mt-2 fluid-caption text-slate-500'>{subtitle}</p> : null}
+  </div>
+</section>

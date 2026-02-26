@@ -1,0 +1,127 @@
+---
+type Props = {
+  firstName: string;
+  lastName: string;
+  defaultStyle?: number;
+  defaultVibe?: string;
+  showControls?: boolean;
+  showUnderline?: boolean;
+  as?: "h1" | "h2" | "h3" | "div";
+  headingClass?: string;
+  rootClass?: string;
+};
+
+const {
+  firstName,
+  lastName,
+  defaultStyle = 2,
+  defaultVibe = "retro",
+  showControls = true,
+  showUnderline = true,
+  as = "h1",
+  headingClass = "font-heading fluid-h1 font-black tracking-tight text-slate-900/95",
+  rootClass = "",
+} = Astro.props as Props;
+
+const Tag = as;
+const vibes = [
+  { value: "tech", label: "Bold Techy" },
+  { value: "elegant", label: "Elegant" },
+  { value: "playful", label: "Playful" },
+  { value: "retro", label: "Retro-Future" },
+  { value: "terminal", label: "Terminal-Raw" },
+  { value: "noir", label: "Neo-Noir" },
+  { value: "swiss", label: "Swiss" },
+  { value: "glass", label: "Organic Glass" },
+  { value: "sunset", label: "Sunset Fade" },
+  { value: "mono", label: "Mono Ink" },
+];
+---
+
+<div
+  class={`flex flex-wrap items-center justify-center gap-3 lg:justify-start ${rootClass}`}
+  data-name-flair-root
+>
+  <Tag class={headingClass}>
+    {firstName && `${firstName} `}
+    <span class="relative inline-flex">
+      <span
+        class={`name-flair name-style-${defaultStyle} name-vibe-${defaultVibe}`}
+        data-name-flair
+        data-style={defaultStyle}
+        data-vibe={defaultVibe}
+      >
+        {lastName}
+      </span>
+      {showUnderline && (
+        <span class="name-underline pointer-events-none absolute -bottom-2 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full"></span>
+      )}
+    </span>
+  </Tag>
+  {showControls && (
+    <div class="flex items-center gap-2">
+      <button
+        type="button"
+        class="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.25em] text-slate-700 shadow-sm hover:-translate-y-0.5 transition-transform"
+        data-style-toggle
+      >
+        Style
+        <span class="ml-2 text-[9px] font-black text-teal-600" data-style-label>
+          {defaultStyle}
+        </span>
+      </button>
+      <label class="text-[10px] font-extrabold uppercase tracking-[0.25em] text-slate-500">
+        Vibe
+        <select
+          class="ml-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.25em] text-slate-700"
+          data-vibe-select
+        >
+          {vibes.map(vibe => (
+            <option value={vibe.value} selected={vibe.value === defaultVibe}>
+              {vibe.label}
+            </option>
+          ))}
+        </select>
+      </label>
+    </div>
+  )}
+</div>
+
+<script is:inline>
+  document.querySelectorAll('[data-name-flair-root]').forEach(root => {
+    const flair = root.querySelector('[data-name-flair]');
+    const styleButton = root.querySelector('[data-style-toggle]');
+    const styleLabel = root.querySelector('[data-style-label]');
+    const vibeSelect = root.querySelector('[data-vibe-select]');
+
+    const styles = ['1','2','3','4','5','6','7','8','9','10'];
+    const vibes = ['tech','elegant','playful','retro','terminal','noir','swiss','glass','sunset','mono'];
+
+    const updateClasses = (style, vibe) => {
+      if (!flair) return;
+      styles.forEach(id => flair.classList.remove(`name-style-${id}`));
+      vibes.forEach(id => flair.classList.remove(`name-vibe-${id}`));
+      flair.classList.add(`name-style-${style}`, `name-vibe-${vibe}`);
+      flair.setAttribute('data-style', style);
+      flair.setAttribute('data-vibe', vibe);
+      if (styleLabel) {
+        styleLabel.textContent = style;
+      }
+    };
+
+    if (styleButton && flair) {
+      styleButton.addEventListener('click', () => {
+        const current = flair.getAttribute('data-style') || '1';
+        const nextIndex = (styles.indexOf(current) + 1) % styles.length;
+        updateClasses(styles[nextIndex], flair.getAttribute('data-vibe') || 'tech');
+      });
+    }
+
+    if (vibeSelect && flair) {
+      vibeSelect.addEventListener('change', event => {
+        const value = event.target?.value || 'tech';
+        updateClasses(flair.getAttribute('data-style') || '1', value);
+      });
+    }
+  });
+</script>

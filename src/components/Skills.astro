@@ -1,0 +1,225 @@
+---
+import { Image } from 'astro:assets';
+import bgImage from '../assets/bg/laptop.webp';
+import { developerInfo, mySkills } from '../data/skills';
+import { techIcons } from '../data/tech-icons';
+import SectionHeading from './SectionHeading.astro';
+const frontendSkills = mySkills.find(item => item.title === 'Frontend');
+const backendSkills = mySkills.find(item => item.title === 'Backend');
+const devopsSkills = mySkills.find(item => item.title === 'DevOps');
+---
+
+<section
+  id='skills'
+  class='relative scroll-mt-16 lg:scroll-mt-20'
+>
+  <div class='absolute inset-0 -z-10'>
+    <Image
+      src={bgImage}
+      alt=''
+      class='h-full w-full object-cover opacity-20'
+      loading='lazy'
+      widths={[480, 640, 960]}
+      sizes='100vw'
+      quality={50}
+    />
+  </div>
+  <SectionHeading
+    title='Skills'
+    className='py-0 lg:py-0 h-0 overflow-hidden'
+  />
+
+  <div class='mx-auto max-w-7xl px-6 pb-4 grid gap-4 lg:grid-cols-[1.1fr_1fr] lg:items-start'>
+    <div class='space-y-4'>
+      <div class='glass-strong rounded-[2rem] p-4 sm:p-5 relative overflow-hidden lg:self-start'>
+        <div class='absolute -top-10 -right-10 h-40 w-40 rounded-full bg-teal-300/30 blur-2xl'>
+        </div>
+        <div class='absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-indigo-300/30 blur-2xl'>
+        </div>
+        <p class='text-[11px] uppercase tracking-[0.35em] text-slate-500 font-extrabold'>
+          Core strengths
+        </p>
+        <h3 class='mt-2 font-heading fluid-h3 font-black text-slate-800'>
+          Full‑stack skills that ship products fast.
+        </h3>
+        <div class='mt-3 space-y-2 fluid-body text-slate-600 measure'>
+          {developerInfo.excerpt.map(p => <p>{p.text}</p>)}
+        </div>
+        <div class='mt-3 flex flex-wrap gap-2'>
+          <span
+            class='rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-extrabold text-slate-800 border border-white/70'
+          >
+            Product-minded
+          </span>
+          <span
+            class='rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-extrabold text-slate-800 border border-white/70'
+          >
+            Performance-first
+          </span>
+          <span
+            class='rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-extrabold text-slate-800 border border-white/70'
+          >
+            UX focused
+          </span>
+        </div>
+      </div>
+      {
+        devopsSkills && (
+          <div class='glass rounded-2xl p-4 sm:p-5 hover:-translate-y-1 transition-transform'>
+            <div class='flex items-center justify-between gap-3'>
+              <div class='flex items-center gap-3'>
+                <span class='inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/80 text-slate-600 shadow-sm'>
+                  <svg
+                    viewBox='0 0 24 24'
+                    aria-hidden='true'
+                    class='h-4 w-4'
+                  >
+                    <path
+                      d='M7.5 17a4.5 4.5 0 1 1 4.3-6 4 4 0 0 1 1.7-.4 3.8 3.8 0 0 1 3.8 3.8c0 2.1-1.7 3.8-3.8 3.8H7.5Z'
+                      fill='currentColor'
+                      opacity='0.9'
+                    />
+                  </svg>
+                </span>
+                <h4 class='font-heading fluid-h4 font-black text-slate-800'>
+                  <span class='relative inline-flex items-center gap-3'>
+                    <span class='h-5 w-1 rounded-full bg-teal-400/80' />
+                    <span>{devopsSkills.title}</span>
+                  </span>
+                </h4>
+              </div>
+              <span class='text-[11px] uppercase tracking-[0.25em] text-slate-400 font-extrabold'>
+                Toolkit
+              </span>
+            </div>
+            <div class='mt-3 flex flex-wrap justify-start gap-2'>
+              {devopsSkills.iconKeys.map(key => (
+                <Image
+                  src={techIcons[key as keyof typeof techIcons]}
+                  alt={`${key} icon`}
+                  class='h-7 w-7 sm:h-8 sm:w-8'
+                  loading='lazy'
+                  width={32}
+                  height={32}
+                />
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </div>
+    <div class='space-y-4'>
+      {
+        [frontendSkills, backendSkills].filter(Boolean).map(
+          item =>
+            item && (
+              <div class='glass rounded-2xl p-4 sm:p-5 hover:-translate-y-1 transition-transform'>
+                <div class='flex items-center justify-between gap-3'>
+                  <div class='flex items-center gap-3'>
+                    <span class='inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/80 text-slate-600 shadow-sm'>
+                      {item.title === 'Frontend' && (
+                        <svg
+                          viewBox='0 0 24 24'
+                          aria-hidden='true'
+                          class='h-4 w-4'
+                        >
+                          <path
+                            d='M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6Z'
+                            fill='currentColor'
+                            opacity='0.9'
+                          />
+                          <rect
+                            x='8'
+                            y='19'
+                            width='8'
+                            height='2'
+                            rx='1'
+                            fill='currentColor'
+                            opacity='0.7'
+                          />
+                        </svg>
+                      )}
+                      {item.title === 'Backend' && (
+                        <svg
+                          viewBox='0 0 24 24'
+                          aria-hidden='true'
+                          class='h-4 w-4'
+                        >
+                          <rect
+                            x='2'
+                            y='6'
+                            width='20'
+                            height='12'
+                            rx='2'
+                            fill='currentColor'
+                            opacity='0.9'
+                          />
+                          <rect
+                            x='6.5'
+                            y='9'
+                            width='1.5'
+                            height='1.5'
+                            rx='0.75'
+                            fill='white'
+                            opacity='0.9'
+                          />
+                          <rect
+                            x='6.5'
+                            y='13.5'
+                            width='1.5'
+                            height='1.5'
+                            rx='0.75'
+                            fill='white'
+                            opacity='0.9'
+                          />
+                          <rect
+                            x='10.5'
+                            y='9'
+                            width='7'
+                            height='1.5'
+                            rx='0.75'
+                            fill='white'
+                            opacity='0.9'
+                          />
+                          <rect
+                            x='10.5'
+                            y='13.5'
+                            width='7'
+                            height='1.5'
+                            rx='0.75'
+                            fill='white'
+                            opacity='0.9'
+                          />
+                        </svg>
+                      )}
+                    </span>
+                    <h4 class='font-heading fluid-h4 font-black text-slate-800'>
+                      <span class='relative inline-flex items-center gap-3'>
+                        <span class='h-5 w-1 rounded-full bg-teal-400/80' />
+                        <span>{item.title}</span>
+                      </span>
+                    </h4>
+                  </div>
+                  <span class='text-[11px] uppercase tracking-[0.25em] text-slate-400 font-extrabold'>
+                    Toolkit
+                  </span>
+                </div>
+                <div class='mt-3 flex flex-wrap justify-start gap-2'>
+                  {item.iconKeys.map(key => (
+                    <Image
+                      src={techIcons[key as keyof typeof techIcons]}
+                      alt={`${key} icon`}
+                      class='h-7 w-7 sm:h-8 sm:w-8'
+                      loading='lazy'
+                      width={32}
+                      height={32}
+                    />
+                  ))}
+                </div>
+              </div>
+            ),
+        )
+      }
+    </div>
+  </div>
+</section>

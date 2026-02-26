@@ -1,0 +1,142 @@
+---
+import { Image, Picture } from 'astro:assets';
+import bgImage from '../assets/bg/spiralarch.webp';
+import p1Image from '../assets/images/p1.webp';
+import p2Image from '../assets/images/p2.webp';
+import { projects } from '../data/projects';
+import { techIcons } from '../data/tech-icons';
+import SectionHeading from './SectionHeading.astro';
+import NameFlair from './ui/NameFlair.astro';
+
+const projectImages = {
+  'p1.webp': p1Image,
+  'p2.webp': p2Image,
+} as const;
+---
+
+<section
+  id='projects'
+  class='relative'
+>
+  <div class='absolute inset-0 -z-10'>
+    <Image
+      src={bgImage}
+      alt=''
+      class='h-full w-full object-cover opacity-20'
+      loading='lazy'
+      widths={[640, 960, 1280]}
+      sizes='100vw'
+      quality={60}
+    />
+  </div>
+  <SectionHeading title='Projects' />
+  <div class='mx-auto max-w-7xl px-6 pb-24'>
+    <div class='grid gap-8 lg:grid-cols-2'>
+      {
+        projects.map(project => (
+          <article class='glass rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col'>
+            <Picture
+              src={projectImages[project.image as keyof typeof projectImages]}
+              alt={`${project.title} preview`}
+              formats={['avif', 'webp']}
+              loading='lazy'
+              widths={[360, 480, 640]}
+              sizes='(max-width: 1024px) 100vw, 50vw'
+              quality={60}
+              class='h-56 w-full object-cover sm:h-64'
+            />
+            <div class='px-5 py-5 sm:px-6 sm:py-6 space-y-4 text-left flex flex-col flex-grow'>
+              <NameFlair
+                firstName=''
+                lastName={project.title}
+                defaultStyle={6}
+                defaultVibe='mono'
+                showControls={false}
+                showUnderline={false}
+                as='h3'
+                headingClass='font-heading fluid-h3 font-black text-slate-800'
+                rootClass='w-full justify-start'
+              />
+              <div>
+                <p class='text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2'>
+                  Tech Used
+                </p>
+                <div class='flex flex-wrap items-center gap-2'>
+                  {project.iconKeys.map(key => (
+                    <Image
+                      src={techIcons[key as keyof typeof techIcons]}
+                      alt={`${key} icon`}
+                      class='h-6 w-6 sm:h-7 sm:w-7'
+                      loading='lazy'
+                      width={28}
+                      height={28}
+                    />
+                  ))}
+                </div>
+              </div>
+              <div class='space-y-2 fluid-body text-slate-600 measure flex-grow'>
+                {project.description.map(p => (
+                  <p>{p}</p>
+                ))}
+              </div>
+              <div class='mt-6 flex flex-wrap items-center justify-center gap-3'>
+                <a
+                  class='inline-flex items-center justify-center rounded-full bg-white/70 px-4 py-2 fluid-ui font-extrabold text-slate-800 shadow hover:-translate-y-0.5 transition-transform border border-white/70'
+                  href={project.gitUrl}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <svg
+                    aria-hidden='true'
+                    viewBox='0 0 24 24'
+                    class='mr-2 h-4 w-4 text-slate-500'
+                  >
+                    <path
+                      d='M8 7 4 12l4 5M16 7l4 5-4 5'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='1.7'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </svg>
+                  Source
+                </a>
+                <a
+                  class='inline-flex items-center justify-center rounded-full bg-indigo-600 px-4 py-2 fluid-ui font-extrabold text-white shadow hover:-translate-y-0.5 transition-transform'
+                  href={project.webUrl}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <svg
+                    aria-hidden='true'
+                    viewBox='0 0 24 24'
+                    class='mr-2 h-4 w-4 text-white/90'
+                  >
+                    <path
+                      d='M8.5 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3.5'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='1.6'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='M14 3h7v7M10 14 21 3'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='1.6'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </svg>
+                  Demo
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

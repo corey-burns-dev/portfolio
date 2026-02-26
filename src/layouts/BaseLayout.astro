@@ -1,0 +1,160 @@
+---
+import siteConfig from '../data/site-config';
+import '../styles/global.css';
+const { title = siteConfig.title, description = siteConfig.description } = Astro.props;
+---
+
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <meta
+      name='viewport'
+      content='width=device-width, initial-scale=1'
+    />
+    <title>{title}</title>
+    <meta
+      name='description'
+      content={description}
+    />
+    <meta
+      property='og:title'
+      content={title}
+    />
+    <meta
+      property='og:description'
+      content={description}
+    />
+    <meta
+      property='og:type'
+      content='website'
+    />
+    <meta
+      property='og:url'
+      content={siteConfig.siteUrl}
+    />
+    <link
+      rel='preload'
+      href='/fonts/Nunito/Nunito-400.woff2'
+      as='font'
+      type='font/woff2'
+      crossorigin
+    />
+    <link
+      rel='preload'
+      href='/fonts/Montserrat/Montserrat-900.woff2'
+      as='font'
+      type='font/woff2'
+      crossorigin
+    />
+  </head>
+  <body>
+    <slot />
+    <script>
+      const links = Array.from(document.querySelectorAll('[data-section-link]'));
+      const sections = links
+        .map(link => {
+          const href = link.getAttribute('href');
+          return href ? document.querySelector(href) : null;
+        })
+        .filter((section): section is Element => section !== null);
+
+      const setActive = (id: string) => {
+        links.forEach(link => {
+          const active = link.getAttribute('href') === `#${id}`;
+          link.classList.toggle('is-active', active);
+          link.classList.toggle('text-teal-500', active);
+          link.classList.toggle('font-black', active);
+          link.setAttribute('aria-current', active ? 'location' : 'false');
+        });
+      };
+
+      let rafId = 0;
+      let isAutoScrolling = false;
+      let autoScrollTimer = 0;
+      const updateActiveByScroll = () => {
+        if (!sections.length) return;
+        if (isAutoScrolling) return;
+        const midpoint = window.scrollY + window.innerHeight * 0.85;
+        const ordered = [...sections].sort((a, b) => {
+          const aTop = a.getBoundingClientRect().top + window.scrollY;
+          const bTop = b.getBoundingClientRect().top + window.scrollY;
+          return aTop - bTop;
+        });
+
+        let activeSection = ordered[0];
+        ordered.forEach(section => {
+          const top = section.getBoundingClientRect().top + window.scrollY;
+          if (top <= midpoint) {
+            activeSection = section;
+          }
+        });
+
+        if (activeSection?.id) {
+          setActive(activeSection.id);
+        }
+      };
+
+      const scheduleUpdate = () => {
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          rafId = 0;
+          updateActiveByScroll();
+        });
+      };
+
+      const startAutoScroll = () => {
+        isAutoScrolling = true;
+        if (autoScrollTimer) {
+          window.clearTimeout(autoScrollTimer);
+        }
+        autoScrollTimer = window.setTimeout(() => {
+          isAutoScrolling = false;
+          updateActiveByScroll();
+        }, 800);
+      };
+
+      const cancelAutoScroll = () => {
+        if (!isAutoScrolling) return;
+        isAutoScrolling = false;
+        if (autoScrollTimer) {
+          window.clearTimeout(autoScrollTimer);
+          autoScrollTimer = 0;
+        }
+        scheduleUpdate();
+      };
+
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          const href = link.getAttribute('href');
+          if (href?.startsWith('#')) {
+            setActive(href.slice(1));
+          }
+          startAutoScroll();
+        });
+      });
+
+      const hash = window.location.hash?.slice(1);
+      if (hash) {
+        setActive(hash);
+      } else {
+        updateActiveByScroll();
+      }
+
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+      window.addEventListener('wheel', cancelAutoScroll, { passive: true });
+      window.addEventListener('touchstart', cancelAutoScroll, { passive: true });
+      window.addEventListener('keydown', cancelAutoScroll);
+      window.addEventListener('resize', scheduleUpdate);
+      window.addEventListener('hashchange', () => {
+        const next = window.location.hash?.slice(1);
+        if (next) {
+          setActive(next);
+          startAutoScroll();
+        } else {
+          updateActiveByScroll();
+        }
+      });
+    </script>
+  </body>
+</html>

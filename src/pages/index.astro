@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import Skills from "../components/Skills.astro";
+import Projects from "../components/Projects.astro";
+import MiniApps from "../components/MiniApps.astro";
+import About from "../components/About.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+<BaseLayout>
+  <Navbar />
+  <main class="pt-12">
+    <Hero />
+    <div class="h-14 sm:h-16 bg-gradient-to-b from-transparent via-white/50 to-transparent"></div>
+    <Skills />
+    <div class="h-14 sm:h-16 bg-gradient-to-b from-transparent via-white/50 to-transparent"></div>
+    <Projects />
+    <div class="h-14 sm:h-16 bg-gradient-to-b from-transparent via-white/50 to-transparent"></div>
+    <MiniApps />
+    <div class="h-14 sm:h-16 bg-gradient-to-b from-transparent via-white/50 to-transparent"></div>
+    <About />
+    <div class="h-14 sm:h-16 bg-gradient-to-b from-transparent via-white/50 to-transparent"></div>
+    <Contact />
+  </main>
+  <a
+    href="#home"
+    class="fixed bottom-6 right-6 z-40 grid h-11 w-11 place-items-center rounded-full bg-white/85 text-slate-800 shadow-soft border border-white/70 hover:-translate-y-0.5 transition-transform"
+    aria-label="Back to top"
+  >
+    ↑
+  </a>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,100 @@
+---
+import { Image, Picture } from 'astro:assets';
+import heroImage from '../assets/bg/hero.webp';
+import me2Image from '../assets/images/me2.webp';
+---
+
+<section
+  id='home'
+  class='relative min-h-screen w-full overflow-hidden bg-slate-50'
+>
+  <Image
+    src={heroImage}
+    alt=''
+    class='absolute inset-0 h-full w-full object-cover opacity-20'
+    loading='lazy'
+    fetchpriority='low'
+    widths={[480, 640, 960, 1280]}
+    sizes='100vw'
+    quality={50}
+  />
+  <div class='relative z-10 flex min-h-screen items-center px-6'>
+    <div class='mx-auto w-full max-w-6xl'>
+      <div class='grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]'>
+        <div class='text-center lg:text-left'>
+          <div
+            class='mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/70 px-4 py-1 text-[11px] font-extrabold uppercase tracking-[0.35em] text-slate-600 lg:mx-0'
+          >
+            Available for work
+          </div>
+          <h1 class='font-heading fluid-h1 font-black tracking-tight text-slate-900/95'>
+            Corey{' '}
+            <span class='name-flair name-style-9 name-vibe-playful'>Burns</span>
+          </h1>
+          <div
+            class='mt-4 inline-flex items-center justify-center rounded-full border border-white/70 bg-white/80 px-5 py-2 fluid-ui font-extrabold uppercase tracking-[0.35em] text-slate-700 shadow'
+          >
+            full-stack developer
+          </div>
+          <p class='mt-5 fluid-lead text-slate-600 max-w-prose mx-auto lg:mx-0'>
+            I build fast, thoughtful web experiences and end-to-end products with a focus on clarity
+            and performance.
+          </p>
+          <div class='mt-7 flex flex-wrap items-center justify-center gap-3 lg:justify-start'>
+            <a
+              href='#projects'
+              class='rounded-full bg-teal-700 px-5 py-2 fluid-ui font-extrabold text-white shadow hover:-translate-y-0.5 transition-transform'
+            >
+              View Projects
+            </a>
+            <a
+              href='#about'
+              class='rounded-full bg-white/80 px-5 py-2 fluid-ui font-extrabold text-slate-800 border border-white/70 hover:-translate-y-0.5 transition-transform'
+            >
+              About Me
+            </a>
+          </div>
+        </div>
+        <div class='relative mx-auto w-full max-w-sm sm:max-w-md lg:max-w-none'>
+          <div
+            class='absolute -inset-10 rounded-[2.25rem] bg-[radial-gradient(circle_at_top,#7dd3fc,transparent_70%)] opacity-35 blur-3xl'
+          >
+          </div>
+          <div
+            class='relative overflow-hidden rounded-[2.5rem] border border-white/60 bg-white/40 p-3 shadow-[0_25px_70px_rgba(15,23,42,0.2)]'
+          >
+            <div class='overflow-hidden rounded-[2rem] border border-white/70 bg-white/70'>
+              <Picture
+                src={me2Image}
+                alt='Headshot of Corey Burns'
+                formats={['avif', 'webp']}
+                loading='eager'
+                fetchpriority='high'
+                decoding='async'
+                widths={[306, 365, 445]}
+                sizes='(max-width: 640px) 306px, (max-width: 1024px) 365px, 445px'
+                quality={100}
+                class='block w-full h-[306px] sm:h-[365px] lg:h-[445px] object-cover opacity-90 [mask-image:radial-gradient(circle_at_50%_35%,black_62%,transparent_100%)] [webkit-mask-image:radial-gradient(circle_at_50%_35%,black_62%,transparent_100%)]'
+              />
+            </div>
+            <div
+              class='pointer-events-none absolute -bottom-10 -left-10 h-24 w-24 rounded-full border border-teal-200/70 bg-white/70'
+            >
+            </div>
+            <div
+              class='pointer-events-none absolute -top-12 -right-12 h-28 w-28 rounded-full border border-slate-200/70 bg-white/60'
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a
+      href='#skills'
+      class='absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 fluid-caption uppercase tracking-[0.35em] text-slate-600 hover:text-teal-500'
+    >
+      <span class='animate-bounce'>Scroll</span>
+      <span class='fluid-ui'>↓</span>
+    </a>
+  </div>
+</section>
